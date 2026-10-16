@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: 246 248 252;
+  --surface: 255 255 255;
+  --surface2: 238 242 250;
+  --line: 218 226 240;
+  --fg: 11 27 58;
+  --muted: 88 104 138;
+  --brand: 24 98 240;
+  --brand-fg: 255 255 255;
+  --success: 5 150 105;
+  --warning: 202 138 4;
+  --danger: 220 38 38;
+  --shadow: 11 27 58;
+  color-scheme: light;
+}
+
+.dark {
+  --bg: 6 13 31;
+  --surface: 12 24 48;
+  --surface2: 18 33 64;
+  --line: 32 52 92;
+  --fg: 232 238 252;
+  --muted: 148 166 204;
+  --brand: 76 141 255;
+  --brand-fg: 6 13 31;
+  --success: 52 211 153;
+  --warning: 250 204 21;
+  --danger: 248 113 113;
+  --shadow: 0 0 0;
+  color-scheme: dark;
+}
+
+html { scroll-behavior: smooth; }
+body { @apply bg-bg text-fg antialiased; }
+
+*:focus-visible {
+  outline: 2px solid rgb(var(--brand));
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.hero-grid {
+  background-image:
+    linear-gradient(rgb(var(--line) / 0.55) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--line) / 0.55) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse at 50% 30%, black 20%, transparent 75%);
+}
+
+@media print {
+  .no-print { display: none !important; }
+  body { background: white !important; }
+}

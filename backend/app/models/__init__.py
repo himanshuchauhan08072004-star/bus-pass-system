@@ -1,0 +1,15 @@
+from app.models.models import (  # noqa: F401
+    ACTIVE_BOOKING_STATUSES,
+    AuditLog,
+    Booking,
+    Bus,
+    BusPass,
+    FareRule,
+    PassApplication,
+    PassType,
+    Payment,
+    Route,
+    RouteStop,
+    Stop,
+    User,
+)

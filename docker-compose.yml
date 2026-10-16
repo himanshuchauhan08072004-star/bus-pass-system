@@ -1,0 +1,48 @@
+# Local development.
+#   docker compose up -d db            -> only PostgreSQL (run backend/frontend natively)
+#   docker compose --profile full up --build   -> whole stack in containers
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: transitflow-db
+    environment:
+      POSTGRES_USER: transitflow
+      POSTGRES_PASSWORD: transitflow_dev   # local development only
+      POSTGRES_DB: transitflow
+    ports:
+      - "5432:5432"
+    volumes:
+      - transitflow_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U transitflow"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  backend:
+    profiles: ["full"]
+    build: ./backend
+    environment:
+      ENVIRONMENT: development
+      DATABASE_URL: postgresql+psycopg://transitflow:transitflow_dev@db:5432/transitflow
+      CORS_ORIGINS: http://localhost:3000
+      RUN_MIGRATIONS: "true"
+      TRUST_FORWARDED_FOR: "false"
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+
+  frontend:
+    profiles: ["full"]
+    build: ./frontend
+    environment:
+      BACKEND_URL: http://backend:8000
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+
+volumes:
+  transitflow_pgdata:
