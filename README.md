@@ -82,7 +82,7 @@ Open http://localhost:3000. Sign in as `admin@transitflow.demo` or `passenger@tr
 ```powershell
 cd backend
 pytest                                   # 86 tests, SQLite, no setup needed
-$env:TEST_DATABASE_URL = "postgresql+psycopg://transitflow:transitflow_dev@localhost:5432/transitflow_test"
+$env:TEST_DATABASE_URL = "postgresql+psycopg://transitflow:transitflow_dev@localhost:5433/transitflow_test"
 pytest                                   # same suite on PostgreSQL (create the database first)
 
 cd ..\frontend

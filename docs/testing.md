@@ -19,7 +19,7 @@ Smoke test covered: login through the proxy (httpOnly session cookie + CSRF cook
 cd backend
 .\.venv\Scripts\Activate.ps1
 pytest                    # SQLite, zero setup
-$env:TEST_DATABASE_URL = "postgresql+psycopg://transitflow:transitflow_dev@localhost:5432/transitflow_test"
+$env:TEST_DATABASE_URL = "postgresql+psycopg://transitflow:transitflow_dev@localhost:5433/transitflow_test"
 pytest                    # PostgreSQL (create the transitflow_test database first; tests drop and recreate tables in it)
 
 cd ..\frontend
