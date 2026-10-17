@@ -37,7 +37,9 @@ export function HeroVisual() {
           </g>
         ))}
         {!reduce && (
-          <motion.circle r="7" fill="rgb(var(--brand))" initial={{ offsetDistance: "0%" }} animate={{ offsetDistance: "100%" }} transition={{ duration: 6, repeat: Infinity, ease: "linear" }} style={{ offsetPath: `path("${d}")` }} />
+          <circle r="7" fill="rgb(var(--brand))">
+            <animateMotion dur="6s" repeatCount="indefinite" path={d} />
+          </circle>
         )}
       </svg>
       <div className="mt-3 grid grid-cols-3 gap-2 text-center text-xs">
