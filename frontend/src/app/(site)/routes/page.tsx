@@ -39,11 +39,11 @@ function RoutesView() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10">
+    <div className="mx-auto max-w-6xl px-4 py-10 sm:px-8">
       <PageHeader title="Explore routes" description="Search by origin and destination, then filter and sort the results." />
-      <Card className="p-5">
+      <Card className="bg-surface p-5 sm:p-7">
         <SearchForm key={`${origin}|${destination}`} initialOrigin={origin} initialDestination={destination} onSearch={(o, d) => update({ origin: o, destination: d })} />
-        <div className="mt-5 grid gap-3 border-t border-line pt-5 sm:grid-cols-3">
+        <div className="mt-5 grid gap-3 border-t border-line/60 pt-5 sm:grid-cols-3">
           <Select label="Sort by" value={sort} onChange={(e) => update({ sort: e.target.value === "name" ? "" : e.target.value })}>
             <option value="name">Route name</option>
             <option value="fare">Lowest fare</option>
@@ -91,7 +91,7 @@ function RoutesView() {
 
 export default function RoutesPage() {
   return (
-    <Suspense fallback={<div className="mx-auto max-w-6xl px-4 py-10"><Skeleton className="h-64" /></div>}>
+    <Suspense fallback={<div className="mx-auto max-w-6xl px-4 py-10 sm:px-8"><Skeleton className="h-64" /></div>}>
       <RoutesView />
     </Suspense>
   );

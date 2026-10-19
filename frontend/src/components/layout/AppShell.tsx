@@ -53,8 +53,8 @@ export function AppShell({ nav, role, title, children }: { nav: NavItem[]; role:
               href={n.href}
               aria-current={active ? "page" : undefined}
               className={cn(
-                "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
-                active ? "bg-brand/10 text-brand" : "text-muted hover:bg-surface2 hover:text-fg",
+                "flex items-center gap-3 rounded-full px-4 py-2.5 text-sm font-medium transition-all duration-200",
+                active ? "bg-brand text-brand-fg shadow-glow" : "text-muted hover:bg-surface2/80 hover:text-fg",
               )}
             >
               <span aria-hidden>{n.icon}</span>
@@ -67,20 +67,24 @@ export function AppShell({ nav, role, title, children }: { nav: NavItem[]; role:
   );
 
   return (
-    <div className="min-h-screen lg:grid lg:grid-cols-[260px_1fr]">
-      <aside className="hidden border-r border-line bg-surface/60 p-4 lg:block no-print">
-        <div className="mb-6 px-2"><Logo href="/" /></div>
-        <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-muted">{title}</p>
+    <div className="frame lg:grid lg:grid-cols-[236px_1fr]">
+      <aside className="hidden border-r border-line/50 bg-sage/20 p-5 lg:flex lg:flex-col no-print">
+        <div className="mb-8 px-1"><Logo href="/" /></div>
+        <p className="mb-2 px-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted">{title}</p>
         <nav aria-label={title}>{items}</nav>
+        <div className="mt-auto rounded-3xl bg-peach/40 p-4 text-xs text-muted">
+          <p className="font-display text-sm font-semibold text-fg">{user.full_name}</p>
+          <p className="mt-0.5 break-all">{user.email}</p>
+        </div>
       </aside>
       <div className="min-w-0">
-        <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-line bg-bg/80 px-4 backdrop-blur-xl no-print">
-          <button className="rounded-xl border border-line bg-surface p-2.5 lg:hidden" aria-label="Open navigation" onClick={() => setOpen(true)}>
+        <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-line/50 bg-bg/80 px-4 backdrop-blur-xl sm:px-8 no-print">
+          <button className="rounded-full border border-line bg-surface p-2.5 lg:hidden" aria-label="Open navigation" onClick={() => setOpen(true)}>
             <Menu className="h-4 w-4" aria-hidden />
           </button>
           <div className="hidden text-sm text-muted lg:block">
             Signed in as <span className="font-semibold text-fg">{user.full_name}</span>
-            {user.role === "admin" && <span className="ml-2 rounded-full bg-brand/10 px-2 py-0.5 text-xs font-semibold text-brand">Admin</span>}
+            {user.role === "admin" && <span className="ml-2 rounded-full bg-peach/60 px-2.5 py-0.5 text-xs font-semibold text-fg">Admin</span>}
           </div>
           <div className="flex items-center gap-2">
             <ThemeToggle />
@@ -96,15 +100,15 @@ export function AppShell({ nav, role, title, children }: { nav: NavItem[]; role:
             </Button>
           </div>
         </header>
-        <main id="main" className="mx-auto max-w-6xl px-4 py-8">{children}</main>
+        <main key={pathname} id="main" className="mx-auto max-w-6xl animate-rise px-4 py-8 sm:px-8">{children}</main>
       </div>
       {open && (
         <div className="fixed inset-0 z-50 lg:hidden">
-          <div className="absolute inset-0 bg-black/60" onClick={() => setOpen(false)} aria-hidden />
-          <aside className="absolute inset-y-0 left-0 w-72 border-r border-line bg-surface p-4">
+          <div className="absolute inset-0 animate-fade bg-stage/60 backdrop-blur-sm" onClick={() => setOpen(false)} aria-hidden />
+          <aside className="absolute inset-y-0 left-0 w-72 animate-pop rounded-r-3xl border-r border-line/70 bg-surface p-5">
             <div className="mb-6 flex items-center justify-between">
               <Logo href="/" />
-              <button onClick={() => setOpen(false)} aria-label="Close navigation" className="rounded-lg p-1.5 text-muted hover:bg-surface2">
+              <button onClick={() => setOpen(false)} aria-label="Close navigation" className="rounded-full p-1.5 text-muted hover:bg-surface2">
                 <X className="h-5 w-5" aria-hidden />
               </button>
             </div>

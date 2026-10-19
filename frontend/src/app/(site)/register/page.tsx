@@ -48,7 +48,7 @@ export default function RegisterPage() {
   return (
     <div className="mx-auto max-w-md px-4 py-16">
       <Card className="p-6 sm:p-8">
-        <h1 className="text-2xl font-bold tracking-tight">Create your account</h1>
+        <h1 className="font-display text-3xl font-semibold tracking-tight">Create your account</h1>
         <p className="mt-1 text-sm text-muted">Book tickets and apply for passes in minutes.</p>
         <form onSubmit={submit} className="mt-6 space-y-4" noValidate>
           {serverError && <Alert tone="danger">{serverError}</Alert>}

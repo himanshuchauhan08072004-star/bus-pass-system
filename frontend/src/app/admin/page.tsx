@@ -1,8 +1,8 @@
 "use client";
 
-import { Activity, Bus, CreditCard, IdCard, Map, Ticket, Users } from "lucide-react";
+import { Activity, CreditCard, IdCard, Ticket, Users } from "lucide-react";
 import Link from "next/link";
-import { Card, CardHeader, StatCard } from "@/components/ui/Card";
+import { Card, CardHeader, StatStrip } from "@/components/ui/Card";
 import { Alert, EmptyState, ErrorState, PageHeader, Skeleton } from "@/components/ui/States";
 import { formatDateTime, formatMoney, statusLabel } from "@/lib/format";
 import type { AdminStats } from "@/lib/types";
@@ -18,7 +18,7 @@ const STATUS_COLORS: Record<string, string> = {
 export default function AdminOverview() {
   const { data, error, loading, reload } = useFetch<AdminStats>("/admin/stats");
   if (error) return <ErrorState message={error} onRetry={reload} />;
-  if (loading && !data) return <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{[0, 1, 2, 3, 4, 5, 6, 7].map((i) => <Skeleton key={i} className="h-28" />)}</div>;
+  if (loading && !data) return <div className="space-y-4"><Skeleton className="h-24" /><Skeleton className="h-64" /></div>;
   if (!data) return null;
 
   const total = Object.values(data.bookings_by_status).reduce((a, b) => a + b, 0);
@@ -33,25 +33,29 @@ export default function AdminOverview() {
           </Alert>
         </div>
       )}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard label="Total passengers" value={data.total_passengers} icon={<Users className="h-5 w-5" />} />
-        <StatCard label="Active passes" value={data.active_passes} icon={<IdCard className="h-5 w-5" />} />
-        <StatCard label="Net revenue" value={formatMoney(data.net_revenue)} icon={<CreditCard className="h-5 w-5" />} hint="Paid minus refunds" />
-        <StatCard label="Bookings (7 days)" value={data.bookings_last_7_days} icon={<Ticket className="h-5 w-5" />} />
-        <StatCard label="Pending applications" value={data.pending_applications} icon={<Activity className="h-5 w-5" />} />
-        <StatCard label="Routes" value={data.routes} icon={<Map className="h-5 w-5" />} />
-        <StatCard label="Buses" value={data.buses} icon={<Bus className="h-5 w-5" />} />
-        <StatCard label="All bookings" value={total} icon={<Ticket className="h-5 w-5" />} />
-      </div>
+      <StatStrip
+        items={[
+          { label: "Passengers", value: data.total_passengers, icon: <Users className="h-4 w-4" /> },
+          { label: "Active passes", value: data.active_passes, icon: <IdCard className="h-4 w-4" /> },
+          { label: "Net revenue", value: formatMoney(data.net_revenue), hint: "Paid minus refunds", icon: <CreditCard className="h-4 w-4" /> },
+          { label: "Bookings (7 days)", value: data.bookings_last_7_days, icon: <Ticket className="h-4 w-4" /> },
+        ]}
+      />
+      <p className="mt-3 flex flex-wrap gap-x-5 gap-y-1 px-2 text-sm text-muted">
+        <span><Activity className="mr-1 inline h-3.5 w-3.5" aria-hidden />{data.pending_applications} pending application{data.pending_applications === 1 ? "" : "s"}</span>
+        <span>{data.routes} routes</span>
+        <span>{data.buses} buses</span>
+        <span>{total} bookings in total</span>
+      </p>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
         <Card>
           <CardHeader title="Bookings by status" />
-          <div className="space-y-3 p-5">
+          <div className="space-y-3 p-6">
             {total === 0 ? <p className="text-sm text-muted">No bookings yet.</p> : (Object.entries(data.bookings_by_status) as [string, number][]).map(([s, n]) => (
               <div key={s}>
                 <div className="mb-1 flex justify-between text-sm"><span>{statusLabel(s)}</span><span className="font-semibold">{n}</span></div>
-                <div className="h-2 overflow-hidden rounded-full bg-surface2" role="presentation">
+                <div className="h-2 overflow-hidden rounded-full bg-surface2/80" role="presentation">
                   <div className={`h-full rounded-full ${STATUS_COLORS[s] ?? "bg-brand"}`} style={{ width: `${(n / total) * 100}%` }} />
                 </div>
               </div>
@@ -60,7 +64,7 @@ export default function AdminOverview() {
         </Card>
         <Card>
           <CardHeader title="Top routes" subtitle="By confirmed bookings" />
-          <div className="p-5">
+          <div className="p-6">
             {data.top_routes.length === 0 ? <p className="text-sm text-muted">No confirmed bookings yet.</p> : (
               <ol className="space-y-3">
                 {data.top_routes.map((r, i) => (
@@ -78,7 +82,7 @@ export default function AdminOverview() {
       <Card className="mt-6">
         <CardHeader title="Recent activity" action={<Link href="/admin/audit" className="text-sm font-semibold text-brand">Full audit log</Link>} />
         {data.recent_activity.length === 0 ? <EmptyState title="No activity yet" /> : (
-          <ul className="divide-y divide-line">
+          <ul className="divide-y divide-line/60">
             {data.recent_activity.map((a) => (
               <li key={a.id} className="flex flex-wrap items-center justify-between gap-2 px-5 py-3 text-sm">
                 <span><span className="font-mono text-xs">{a.action}</span> <span className="text-muted">· {a.entity_type} {a.entity_id}</span></span>

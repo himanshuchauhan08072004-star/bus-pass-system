@@ -24,7 +24,7 @@ export default function BookingsPage() {
             key={f || "all"}
             onClick={() => setStatus(f)}
             aria-pressed={status === f}
-            className={cn("rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors", status === f ? "border-brand bg-brand text-brand-fg" : "border-line bg-surface text-muted hover:text-fg")}
+            className={cn("rounded-full border px-4 py-1.5 text-sm font-medium transition-all duration-200", status === f ? "border-brand bg-brand text-brand-fg shadow-glow" : "border-line bg-surface/80 text-muted hover:text-fg")}
           >
             {f ? statusLabel(f) : "All"}
           </button>
@@ -37,7 +37,7 @@ export default function BookingsPage() {
       ) : data && data.length === 0 ? (
         <EmptyState icon={<Ticket className="h-6 w-6" />} title="No bookings found" message={status ? "Try a different filter." : "Book your first journey to see it here."} action={<ButtonLink href="/routes" size="sm">Find a route</ButtonLink>} />
       ) : (
-        <div className="grid gap-2">{data?.map((b) => <BookingRow key={b.id} b={b} />)}</div>
+        <div className="grid gap-3">{data?.map((b) => <BookingRow key={b.id} b={b} />)}</div>
       )}
     </>
   );

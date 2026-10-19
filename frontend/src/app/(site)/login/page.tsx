@@ -35,7 +35,7 @@ function LoginForm() {
 
   return (
     <Card className="p-6 sm:p-8">
-      <h1 className="text-2xl font-bold tracking-tight">Welcome back</h1>
+      <h1 className="font-display text-3xl font-semibold tracking-tight">Welcome back</h1>
       <p className="mt-1 text-sm text-muted">Sign in to manage your tickets and passes.</p>
       <form onSubmit={submit} className="mt-6 space-y-4" noValidate>
         {error && <Alert tone="danger">{error}</Alert>}

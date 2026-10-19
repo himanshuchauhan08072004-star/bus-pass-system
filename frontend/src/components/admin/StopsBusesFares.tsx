@@ -231,7 +231,7 @@ export function FaresTab() {
           <Input label="Base fare (₹)" type="number" step="0.01" min="0" value={f.base_fare} onChange={(e) => setF({ ...f, base_fare: e.target.value })} required />
           <Input label="Rate per km (₹)" type="number" step="0.01" min="0" value={f.per_km_rate} onChange={(e) => setF({ ...f, per_km_rate: e.target.value })} required />
           <Input label="Minimum fare (₹)" type="number" step="0.01" min="0" value={f.min_fare} onChange={(e) => setF({ ...f, min_fare: e.target.value })} required />
-          <p className="rounded-xl bg-surface2 p-3 text-sm text-muted">Example: a 10 km ride costs {formatMoney(preview)}.</p>
+          <p className="rounded-2xl bg-sage/40 p-3 text-sm text-muted">Example: a 10 km ride costs {formatMoney(preview)}.</p>
           <Button type="submit" className="w-full" loading={busy}>Save fare rule</Button>
         </form>
       </Modal>

@@ -19,10 +19,10 @@ export default function AdminRoutesPage() {
   return (
     <>
       <PageHeader title="Routes, stops & fares" description="Manage the network, route-stop sequences, fare rules and fleet." />
-      <div role="tablist" aria-label="Network sections" className="mb-6 inline-flex flex-wrap gap-1 rounded-xl border border-line bg-surface p-1">
+      <div role="tablist" aria-label="Network sections" className="mb-6 inline-flex flex-wrap gap-1 rounded-full border border-line/70 bg-surface/90 p-1">
         {TABS.map((t) => (
           <button key={t.id} role="tab" aria-selected={tab === t.id} aria-controls={`panel-${t.id}`} id={`tab-${t.id}`} onClick={() => setTab(t.id)}
-            className={cn("rounded-lg px-4 py-2 text-sm font-semibold transition-colors", tab === t.id ? "bg-brand text-brand-fg" : "text-muted hover:text-fg")}>
+            className={cn("rounded-full px-4 py-2 text-sm font-semibold transition-colors", tab === t.id ? "bg-brand text-brand-fg" : "text-muted hover:text-fg")}>
             {t.label}
           </button>
         ))}

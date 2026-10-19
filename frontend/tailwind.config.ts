@@ -15,6 +15,9 @@ const config: Config = {
         fg: token("fg"),
         muted: token("muted"),
         brand: token("brand"),
+        sage: token("sage"),
+        peach: token("peach"),
+        stage: token("stage"),
         "brand-fg": token("brand-fg"),
         success: token("success"),
         warning: token("warning"),
@@ -22,11 +25,12 @@ const config: Config = {
       },
       fontFamily: {
         sans: ['"Inter"', "ui-sans-serif", "system-ui", "-apple-system", '"Segoe UI"', "Roboto", "sans-serif"],
+        display: ['"Iowan Old Style"', '"Palatino Linotype"', "Palatino", "Georgia", "Cambria", "serif"],
         mono: ["ui-monospace", "SFMono-Regular", "Menlo", "Consolas", "monospace"],
       },
       boxShadow: {
-        card: "0 1px 2px rgb(var(--shadow) / 0.06), 0 8px 24px -12px rgb(var(--shadow) / 0.18)",
-        glow: "0 0 0 1px rgb(var(--brand) / 0.35), 0 12px 40px -12px rgb(var(--brand) / 0.55)",
+        card: "0 1px 1px rgb(var(--shadow) / 0.04), 0 14px 34px -18px rgb(var(--shadow) / 0.28)",
+        glow: "0 10px 24px -12px rgb(var(--brand) / 0.55)",
       },
       keyframes: {
         shimmer: { "100%": { transform: "translateX(100%)" } },

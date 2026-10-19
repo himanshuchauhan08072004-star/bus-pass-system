@@ -12,6 +12,7 @@ import { Modal } from "@/components/ui/Modal";
 import { Alert, EmptyState, ErrorState, PageHeader, Skeleton } from "@/components/ui/States";
 import { useToast } from "@/components/ui/Toast";
 import { api, errorMessage } from "@/lib/api";
+import { useAuth } from "@/lib/auth";
 import { cn, formatDate, formatMoney } from "@/lib/format";
 import type { Application, BusPass, PassType } from "@/lib/types";
 import { useFetch } from "@/lib/useFetch";
@@ -20,6 +21,7 @@ type Tab = "passes" | "apply" | "applications";
 
 export default function PassesPage() {
   const toast = useToast();
+  const { user } = useAuth();
   const [tab, setTab] = useState<Tab>("passes");
   const passes = useFetch<BusPass[]>("/passes");
   const types = useFetch<PassType[]>("/pass-types");
@@ -75,7 +77,7 @@ export default function PassesPage() {
   return (
     <>
       <PageHeader title="Bus passes" description="Apply, renew and show your digital pass." />
-      <div role="tablist" aria-label="Pass sections" className="mb-6 flex gap-1 rounded-xl border border-line bg-surface p-1">
+      <div role="tablist" aria-label="Pass sections" className="mb-6 flex gap-1 rounded-full border border-line/70 bg-surface/90 p-1">
         {tabs.map((t) => (
           <button
             key={t.id}
@@ -84,7 +86,7 @@ export default function PassesPage() {
             aria-selected={tab === t.id}
             aria-controls={`panel-${t.id}`}
             onClick={() => setTab(t.id)}
-            className={cn("flex-1 rounded-lg px-3 py-2 text-sm font-semibold transition-colors", tab === t.id ? "bg-brand text-brand-fg" : "text-muted hover:text-fg")}
+            className={cn("flex-1 rounded-full px-3 py-2 text-sm font-semibold transition-all duration-200", tab === t.id ? "bg-brand text-brand-fg shadow-glow" : "text-muted hover:text-fg")}
           >
             {t.label}
           </button>
@@ -100,6 +102,7 @@ export default function PassesPage() {
               <PassCard
                 key={p.id}
                 pass={p}
+                holder={user?.full_name}
                 actions={
                   p.can_renew && p.status !== "revoked" ? (
                     <Button size="sm" loading={busy === p.id} onClick={() => renew(p)}>
@@ -122,7 +125,7 @@ export default function PassesPage() {
                 {t.eligibility !== "general" && <Badge tone="info">{t.eligibility}</Badge>}
               </div>
               <p className="mt-1 flex-1 text-sm text-muted">{t.description}</p>
-              <p className="mt-4 text-3xl font-extrabold tracking-tight">{formatMoney(t.price)}</p>
+              <p className="mt-4 font-display text-4xl font-semibold tracking-tight">{formatMoney(t.price)}</p>
               <p className="text-xs text-muted">Valid for {t.duration_days} days</p>
               <Button className="mt-4" onClick={() => { setApplyFor(t); setFormError(null); }}>Apply</Button>
             </Card>
@@ -160,9 +163,9 @@ export default function PassesPage() {
       <Modal open={!!applyFor} onClose={() => setApplyFor(null)} title={applyFor ? `Apply for ${applyFor.name}` : ""}>
         {applyFor && (
           <div className="space-y-4">
-            <div className="rounded-xl bg-surface2 p-4">
+            <div className="rounded-3xl bg-sage/40 p-4">
               <p className="text-sm text-muted">{applyFor.duration_days}-day pass</p>
-              <p className="text-2xl font-bold">{formatMoney(applyFor.price)}</p>
+              <p className="font-display text-3xl font-semibold">{formatMoney(applyFor.price)}</p>
               <p className="mt-1 text-xs text-muted">Priced by the server. You pay after applying; an administrator then reviews your application.</p>
             </div>
             {applyFor.eligibility !== "general" && (

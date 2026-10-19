@@ -30,7 +30,7 @@ export default function VerifyPage() {
 
   return (
     <div className="mx-auto max-w-xl px-4 py-14">
-      <h1 className="text-2xl font-bold tracking-tight">Verify a ticket or pass</h1>
+      <h1 className="font-display text-3xl font-semibold tracking-tight">Verify a ticket or pass</h1>
       <p className="mt-1 text-sm text-muted">
         Paste the code read from a QR ticket. A QR code alone proves nothing: this check looks the ticket up on the server and reports whether it is valid right now.
         No personal details are shown.

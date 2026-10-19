@@ -22,11 +22,11 @@ export function Skeleton({ className }: { className?: string }) {
 
 export function EmptyState({ title, message, action, icon }: { title: string; message?: string; action?: ReactNode; icon?: ReactNode }) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-line px-6 py-12 text-center">
-      <div className="mb-3 rounded-full bg-surface2 p-3 text-muted" aria-hidden>
+    <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-line bg-surface/50 px-6 py-12 text-center">
+      <div className="mb-3 rounded-full bg-sage/60 p-3.5 text-brand" aria-hidden>
         {icon ?? <Inbox className="h-6 w-6" />}
       </div>
-      <h3 className="font-semibold">{title}</h3>
+      <h3 className="font-display text-lg font-semibold">{title}</h3>
       {message && <p className="mt-1 max-w-sm text-sm text-muted">{message}</p>}
       {action && <div className="mt-4">{action}</div>}
     </div>
@@ -35,7 +35,7 @@ export function EmptyState({ title, message, action, icon }: { title: string; me
 
 export function ErrorState({ message, onRetry }: { message: string; onRetry?: () => void }) {
   return (
-    <div role="alert" className="flex flex-col items-center rounded-2xl border border-danger/30 bg-danger/5 px-6 py-10 text-center">
+    <div role="alert" className="flex flex-col items-center rounded-3xl border border-danger/30 bg-danger/5 px-6 py-10 text-center">
       <AlertTriangle className="mb-2 h-6 w-6 text-danger" aria-hidden />
       <p className="text-sm font-medium">{message}</p>
       {onRetry && (
@@ -49,13 +49,13 @@ export function ErrorState({ message, onRetry }: { message: string; onRetry?: ()
 
 export function Alert({ tone = "info", children }: { tone?: "info" | "warning" | "danger" | "success"; children: ReactNode }) {
   const tones = {
-    info: "border-brand/30 bg-brand/10",
-    warning: "border-warning/40 bg-warning/10",
+    info: "border-brand/20 bg-sage/40",
+    warning: "border-warning/30 bg-peach/40",
     danger: "border-danger/30 bg-danger/10",
     success: "border-success/30 bg-success/10",
   };
   return (
-    <div role={tone === "danger" ? "alert" : "status"} className={cn("rounded-xl border px-4 py-3 text-sm", tones[tone])}>
+    <div role={tone === "danger" ? "alert" : "status"} className={cn("rounded-2xl border px-4 py-3 text-sm", tones[tone])}>
       {children}
     </div>
   );
@@ -63,9 +63,9 @@ export function Alert({ tone = "info", children }: { tone?: "info" | "warning" |
 
 export function PageHeader({ title, description, action }: { title: string; description?: string; action?: ReactNode }) {
   return (
-    <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+    <div className="mb-7 flex flex-wrap items-end justify-between gap-3">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
+        <h1 className="font-display text-3xl font-semibold tracking-tight">{title}</h1>
         {description && <p className="mt-1 text-sm text-muted">{description}</p>}
       </div>
       {action}

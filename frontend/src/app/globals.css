@@ -2,46 +2,79 @@
 @tailwind components;
 @tailwind utilities;
 
+/* TransitFlow design tokens: warm cream / pale sage / muted peach on deep olive.
+   Every colour is an "r g b" triplet so Tailwind alpha modifiers keep working. */
 :root {
-  --bg: 246 248 252;
-  --surface: 255 255 255;
-  --surface2: 238 242 250;
-  --line: 218 226 240;
-  --fg: 11 27 58;
-  --muted: 88 104 138;
-  --brand: 24 98 240;
-  --brand-fg: 255 255 255;
-  --success: 5 150 105;
-  --warning: 202 138 4;
-  --danger: 220 38 38;
-  --shadow: 11 27 58;
+  --bg: 243 238 224;
+  --surface: 251 248 239;
+  --surface2: 233 229 210;
+  --line: 216 209 184;
+  --fg: 40 45 31;
+  --muted: 106 111 90;
+  --brand: 66 84 54;
+  --brand-fg: 248 244 232;
+  --success: 72 122 78;
+  --warning: 176 116 46;
+  --danger: 174 68 56;
+  --sage: 205 217 187;
+  --peach: 240 205 176;
+  --stage: 41 46 32;
+  --shadow: 40 45 31;
   color-scheme: light;
 }
 
 .dark {
-  --bg: 6 13 31;
-  --surface: 12 24 48;
-  --surface2: 18 33 64;
-  --line: 32 52 92;
-  --fg: 232 238 252;
-  --muted: 148 166 204;
-  --brand: 76 141 255;
-  --brand-fg: 6 13 31;
-  --success: 52 211 153;
-  --warning: 250 204 21;
-  --danger: 248 113 113;
+  --bg: 31 35 25;
+  --surface: 40 45 33;
+  --surface2: 51 57 42;
+  --line: 68 75 56;
+  --fg: 240 235 220;
+  --muted: 170 174 152;
+  --brand: 196 214 170;
+  --brand-fg: 31 35 25;
+  --success: 150 200 140;
+  --warning: 232 184 110;
+  --danger: 232 138 124;
+  --sage: 86 104 72;
+  --peach: 120 86 66;
+  --stage: 16 18 12;
   --shadow: 0 0 0;
   color-scheme: dark;
 }
 
 html { scroll-behavior: smooth; }
-body { @apply bg-bg text-fg antialiased; }
+body { @apply bg-bg text-fg antialiased lg:bg-stage; }
 
 *:focus-visible {
   outline: 2px solid rgb(var(--brand));
   outline-offset: 2px;
-  border-radius: 6px;
+  border-radius: 8px;
 }
+
+/* The floating rounded application surface on desktop; edge to edge on mobile. */
+.frame { position: relative; min-height: 100vh; background: rgb(var(--bg)); }
+@media (min-width: 1024px) {
+  .frame {
+    margin: 1.25rem;
+    min-height: calc(100vh - 2.5rem);
+    border-radius: 2.25rem;
+    overflow: clip;
+    box-shadow: 0 40px 90px -40px rgb(0 0 0 / 0.65), inset 0 0 0 1px rgb(var(--line) / 0.55);
+  }
+}
+
+.hero-grid {
+  background-image: radial-gradient(rgb(var(--line) / 0.9) 1px, transparent 1px);
+  background-size: 26px 26px;
+  mask-image: radial-gradient(ellipse at 60% 30%, black 10%, transparent 70%);
+}
+
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes pop { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: none; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+.animate-rise { animation: rise 0.45s ease-out both; }
+.animate-pop { animation: pop 0.25s ease-out both; }
+.animate-fade { animation: fade 0.2s ease-out both; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -52,15 +85,8 @@ body { @apply bg-bg text-fg antialiased; }
   }
 }
 
-.hero-grid {
-  background-image:
-    linear-gradient(rgb(var(--line) / 0.55) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(var(--line) / 0.55) 1px, transparent 1px);
-  background-size: 44px 44px;
-  mask-image: radial-gradient(ellipse at 50% 30%, black 20%, transparent 75%);
-}
-
 @media print {
   .no-print { display: none !important; }
   body { background: white !important; }
+  .frame { margin: 0; border-radius: 0; box-shadow: none; }
 }

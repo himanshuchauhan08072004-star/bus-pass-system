@@ -13,7 +13,7 @@ interface FieldShellProps {
 function FieldShell({ label, error, hint, id, children }: FieldShellProps) {
   return (
     <div className="space-y-1.5">
-      <label htmlFor={id} className="text-sm font-medium">
+      <label htmlFor={id} className="text-xs font-semibold uppercase tracking-wider text-muted">
         {label}
       </label>
       {children}
@@ -32,7 +32,7 @@ function FieldShell({ label, error, hint, id, children }: FieldShellProps) {
 }
 
 const control =
-  "w-full rounded-xl border bg-surface px-3.5 text-sm text-fg placeholder:text-muted/70 transition-colors focus:border-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 disabled:opacity-60";
+  "w-full rounded-2xl border bg-surface2/40 px-4 text-sm text-fg placeholder:text-muted/70 transition-colors focus:border-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 disabled:opacity-60";
 
 function describedBy(id: string, error?: string, hint?: string) {
   return error ? `${id}-error` : hint ? `${id}-hint` : undefined;
