@@ -49,24 +49,24 @@ export function Modal({ open, onClose, title, children, wide }: { open: boolean;
   if (!open) return null;
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center p-0 sm:items-center sm:p-4 no-print">
-      <div className="absolute inset-0 animate-fade bg-stage/60 backdrop-blur-sm" onClick={onClose} aria-hidden />
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} aria-hidden />
       <div
         ref={ref}
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
         tabIndex={-1}
-        className={`relative animate-pop max-h-[92vh] w-full overflow-y-auto rounded-t-3xl border border-line/70 bg-surface shadow-card sm:rounded-3xl ${wide ? "sm:max-w-2xl" : "sm:max-w-md"}`}
+        className={`relative max-h-[92vh] w-full overflow-y-auto rounded-t-2xl border border-line bg-surface shadow-card sm:rounded-2xl ${wide ? "sm:max-w-2xl" : "sm:max-w-md"}`}
       >
-        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-line/60 bg-surface px-6 py-4">
-          <h2 id={titleId} className="font-display text-lg font-semibold">
+        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-line bg-surface px-5 py-4">
+          <h2 id={titleId} className="text-base font-semibold">
             {title}
           </h2>
           <button onClick={onClose} aria-label="Close dialog" className="rounded-lg p-1.5 text-muted hover:bg-surface2">
             <X className="h-5 w-5" aria-hidden />
           </button>
         </div>
-        <div className="p-6">{children}</div>
+        <div className="p-5">{children}</div>
       </div>
     </div>
   );

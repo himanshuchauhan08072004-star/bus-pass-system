@@ -4,7 +4,6 @@ import { Info, Users } from "lucide-react";
 import Link from "next/link";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useMemo, useState } from "react";
-import { BusIllustration } from "@/components/features/BusIllustration";
 import { PaymentModal } from "@/components/features/PaymentModal";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -68,13 +67,9 @@ function BookingPanel({ route }: { route: Route }) {
   const goToBooking = () => booking && router.push(`/dashboard/bookings/${booking.id}`);
 
   return (
-    <Card className="overflow-hidden">
-      <div className="bg-gradient-to-br from-peach/50 via-surface to-sage/50 px-6 py-5">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">Booking summary</p>
-        <h2 className="mt-1 font-display text-2xl font-semibold tracking-tight">Book this route</h2>
-        <p className="text-sm text-muted">Your fare is calculated by our server.</p>
-      </div>
-      <div className="space-y-5 p-6">
+    <Card>
+      <CardHeader title="Book this route" subtitle="The fare is calculated by our server." />
+      <div className="space-y-4 p-5">
         <div className="grid gap-4 sm:grid-cols-2">
           <Select label="From" value={from} onChange={(e) => setFrom(Number(e.target.value))}>
             {stops.map((s) => <option key={s.stop_id} value={s.stop_id}>{s.stop_name}</option>)}
@@ -92,32 +87,22 @@ function BookingPanel({ route }: { route: Route }) {
           </Select>
         </div>
 
-        <div className="rounded-2xl border border-line/60 bg-surface2/40 px-4 py-3 text-sm">
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-muted">Passenger</p>
-          {user ? (
-            <p className="mt-0.5 font-medium">{user.full_name} <span className="break-all font-normal text-muted">· {user.email}</span></p>
-          ) : (
-            <p className="mt-0.5 text-muted">Sign in to book. Your details will be filled in automatically.</p>
-          )}
-        </div>
-
-        <div className="rounded-3xl bg-sage/40 p-5" aria-live="polite">
+        <div className="rounded-xl bg-surface2 p-4" aria-live="polite">
           {quote.loading ? (
-            <Skeleton className="h-20" />
+            <Skeleton className="h-12" />
           ) : quote.error ? (
             <p className="text-sm text-danger">{quote.error}</p>
           ) : quote.data ? (
-            <>
-              <dl className="space-y-1.5 text-sm">
-                <div className="flex justify-between"><dt className="text-muted">Distance</dt><dd>{Number(quote.data.distance_km).toFixed(1)} km</dd></div>
-                <div className="flex justify-between"><dt className="text-muted">Fare per person</dt><dd>{formatMoney(quote.data.unit_fare)}</dd></div>
-                <div className="flex justify-between"><dt className="flex items-center gap-1.5 text-muted"><Users className="h-4 w-4" aria-hidden /> Passengers</dt><dd>× {passengers}</dd></div>
-              </dl>
-              <div className="mt-3 flex items-end justify-between border-t border-dashed border-brand/30 pt-3">
-                <p className="text-sm font-medium">Total fare</p>
-                <p className="font-display text-4xl font-semibold tracking-tight">{formatMoney(quote.data.total_fare)}</p>
+            <div className="flex items-end justify-between gap-3">
+              <div>
+                <p className="text-xs text-muted">{Number(quote.data.distance_km).toFixed(1)} km · {formatMoney(quote.data.unit_fare)} per person</p>
+                <p className="mt-0.5 flex items-center gap-1.5 text-sm text-muted"><Users className="h-4 w-4" aria-hidden /> {passengers} passenger{passengers > 1 ? "s" : ""}</p>
               </div>
-            </>
+              <div className="text-right">
+                <p className="text-xs text-muted">Total fare</p>
+                <p className="text-3xl font-extrabold tracking-tight">{formatMoney(quote.data.total_fare)}</p>
+              </div>
+            </div>
           ) : (
             <p className="text-sm text-muted">Choose valid stops to see the fare.</p>
           )}
@@ -147,30 +132,23 @@ function RouteDetail() {
   const { id } = useParams<{ id: string }>();
   const { data: route, error, loading, reload } = useFetch<Route>(`/routes/${id}`);
 
-  if (loading && !route) return <div className="mx-auto max-w-6xl px-4 py-10 sm:px-8"><Skeleton className="h-96" /></div>;
+  if (loading && !route) return <div className="mx-auto max-w-6xl px-4 py-10"><Skeleton className="h-96" /></div>;
   if (error || !route) return <div className="mx-auto max-w-xl px-4 py-16"><ErrorState message={error ?? "Route not found"} onRetry={reload} /></div>;
 
-  const first = route.stops[0]?.stop_name;
-  const last = route.stops[route.stops.length - 1]?.stop_name;
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 sm:px-8">
+    <div className="mx-auto max-w-6xl px-4 py-10">
       <nav aria-label="Breadcrumb" className="mb-4 text-sm text-muted">
         <Link href="/routes" className="hover:text-fg">Routes</Link> <span aria-hidden>/</span> <span className="text-fg">{route.code}</span>
       </nav>
-      <div className="grid gap-6 lg:grid-cols-[1fr_440px]">
+      <div className="mb-6 flex flex-wrap items-center gap-3">
+        <Badge tone="info">{route.code}</Badge>
+        <h1 className="text-2xl font-bold tracking-tight">{route.name}</h1>
+      </div>
+      <div className="grid gap-6 lg:grid-cols-[1fr_420px]">
         <div className="space-y-6">
-          <Card className="overflow-hidden">
-            <div className="bg-gradient-to-br from-sage/60 via-surface to-peach/40 px-6 pb-2 pt-6">
-              <div className="flex flex-wrap items-center gap-3">
-                <Badge tone="info">{route.code}</Badge>
-                <h1 className="font-display text-3xl font-semibold tracking-tight">{route.name}</h1>
-              </div>
-              <p className="mt-3 flex flex-wrap items-center gap-x-3 text-base font-medium">
-                <span>{first}</span><span className="text-brand" aria-hidden>→</span><span>{last}</span>
-              </p>
-              <BusIllustration className="mx-auto mt-2 max-w-md" />
-            </div>
-            <dl className="grid gap-4 border-t border-line/60 p-6 sm:grid-cols-3">
+          <Card>
+            <CardHeader title="Operating information" />
+            <dl className="grid gap-4 p-5 sm:grid-cols-3">
               <div><dt className="text-xs text-muted">Hours</dt><dd className="font-semibold">{formatTime(route.operating_start)} – {formatTime(route.operating_end)}</dd></div>
               <div><dt className="text-xs text-muted">Frequency</dt><dd className="font-semibold">Every {route.frequency_minutes} minutes</dd></div>
               <div><dt className="text-xs text-muted">Length</dt><dd className="font-semibold">{Number(route.total_distance_km).toFixed(1)} km · {route.stops.length} stops</dd></div>
@@ -179,7 +157,7 @@ function RouteDetail() {
           {route.fare && (
             <Card>
               <CardHeader title="Fare structure" subtitle="Fare = base + rate × distance, never less than the minimum." />
-              <dl className="grid gap-4 p-6 sm:grid-cols-3">
+              <dl className="grid gap-4 p-5 sm:grid-cols-3">
                 <div><dt className="text-xs text-muted">Base fare</dt><dd className="font-semibold">{formatMoney(route.fare.base_fare)}</dd></div>
                 <div><dt className="text-xs text-muted">Per kilometre</dt><dd className="font-semibold">{formatMoney(route.fare.per_km_rate)}</dd></div>
                 <div><dt className="text-xs text-muted">Minimum fare</dt><dd className="font-semibold">{formatMoney(route.fare.min_fare)}</dd></div>
@@ -188,17 +166,17 @@ function RouteDetail() {
           )}
           <Card>
             <CardHeader title="Stops" />
-            <ol className="p-6">
+            <ol className="p-5">
               {route.stops.map((s, i) => (
                 <li key={s.stop_id} className="relative flex gap-4 pb-5 last:pb-0">
-                  {i < route.stops.length - 1 && <span className="absolute left-[7px] top-4 h-full w-0.5 bg-brand/20" aria-hidden />}
+                  {i < route.stops.length - 1 && <span className="absolute left-[7px] top-4 h-full w-0.5 bg-line" aria-hidden />}
                   <span className="relative z-10 mt-1 h-4 w-4 shrink-0 rounded-full border-4 border-brand bg-surface" aria-hidden />
                   <div className="flex flex-1 items-baseline justify-between gap-3">
-                    <div className="min-w-0">
-                      <p className="break-words font-medium">{s.stop_name}</p>
+                    <div>
+                      <p className="font-medium">{s.stop_name}</p>
                       <p className="text-xs text-muted">{s.city}</p>
                     </div>
-                    <p className="shrink-0 text-sm text-muted">{Number(s.distance_km).toFixed(1)} km</p>
+                    <p className="text-sm text-muted">{Number(s.distance_km).toFixed(1)} km</p>
                   </div>
                 </li>
               ))}

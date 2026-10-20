@@ -24,9 +24,9 @@ export function DataTable<T>({
   if (loading && !rows) return <Spinner />;
   if (!rows || rows.length === 0) return <EmptyState title={empty} />;
   return (
-    <div className="overflow-x-auto rounded-3xl border border-line/70 bg-surface/90 shadow-card">
+    <div className="overflow-x-auto rounded-2xl border border-line bg-surface shadow-card">
       <table className="w-full min-w-[640px] text-left text-sm">
-        <thead className="border-b border-line/60 bg-sage/30 text-xs uppercase tracking-wide text-muted">
+        <thead className="border-b border-line bg-surface2/60 text-xs uppercase tracking-wide text-muted">
           <tr>
             {columns.map((c) => (
               <th key={c.header} scope="col" className={`px-4 py-3 font-semibold ${c.className ?? ""}`}>
@@ -35,7 +35,7 @@ export function DataTable<T>({
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-line/60">
+        <tbody className="divide-y divide-line">
           {rows.map((r) => (
             <tr key={rowKey(r)} className="hover:bg-surface2/40">
               {columns.map((c) => (

@@ -183,9 +183,9 @@ export default function AdminPassesPage() {
   return (
     <>
       <PageHeader title="Passes" description="Review applications and manage pass types and prices." />
-      <div role="tablist" aria-label="Pass sections" className="mb-6 inline-flex gap-1 rounded-full border border-line/70 bg-surface/90 p-1">
+      <div role="tablist" aria-label="Pass sections" className="mb-6 inline-flex gap-1 rounded-xl border border-line bg-surface p-1">
         {([["applications", "Applications"], ["types", "Pass types & prices"]] as const).map(([id, label]) => (
-          <button key={id} role="tab" aria-selected={tab === id} onClick={() => setTab(id)} className={cn("rounded-full px-4 py-2 text-sm font-semibold transition-colors", tab === id ? "bg-brand text-brand-fg" : "text-muted hover:text-fg")}>{label}</button>
+          <button key={id} role="tab" aria-selected={tab === id} onClick={() => setTab(id)} className={cn("rounded-lg px-4 py-2 text-sm font-semibold transition-colors", tab === id ? "bg-brand text-brand-fg" : "text-muted hover:text-fg")}>{label}</button>
         ))}
       </div>
       <div role="tabpanel">{tab === "applications" ? <Applications /> : <PassTypes />}</div>

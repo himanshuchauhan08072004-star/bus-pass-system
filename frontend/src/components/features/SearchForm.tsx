@@ -30,12 +30,12 @@ export function SearchForm({ initialOrigin = "", initialDestination = "", onSear
           setDestination(origin);
         }}
         aria-label="Swap origin and destination"
-        className="mx-auto flex h-11 w-11 items-center justify-center rounded-full border border-line bg-surface text-muted transition-all duration-200 hover:rotate-180 hover:text-brand"
+        className="mx-auto hidden h-11 w-11 items-center justify-center rounded-xl border border-line bg-surface text-muted transition-colors hover:text-brand md:flex"
       >
-        <ArrowRightLeft className="h-4 w-4 rotate-90 md:rotate-0" aria-hidden />
+        <ArrowRightLeft className="h-4 w-4" aria-hidden />
       </button>
       <Input label="To" name="destination" list="stop-options" placeholder="e.g. IGI Airport T3" value={destination} onChange={(e) => setDestination(e.target.value)} autoComplete="off" />
-      <Button type="submit" size="md" className="h-11 w-full md:w-auto md:px-7">
+      <Button type="submit" size="md" className="h-11 md:px-7">
         <Search className="h-4 w-4" aria-hidden /> Search routes
       </Button>
       <datalist id="stop-options">

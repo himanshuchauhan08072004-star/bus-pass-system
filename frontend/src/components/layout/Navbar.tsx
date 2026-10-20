@@ -28,12 +28,12 @@ export function Navbar() {
   const home = user?.role === "admin" ? "/admin" : "/dashboard";
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line/50 bg-bg/80 backdrop-blur-xl no-print">
+    <header className="sticky top-0 z-40 border-b border-line bg-bg/80 backdrop-blur-xl no-print">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
         <Logo />
         <nav aria-label="Primary" className="hidden items-center gap-1 md:flex">
           {links.map((l) => (
-            <Link key={l.href} href={l.href} className="rounded-full px-4 py-2 text-sm font-medium text-muted transition-colors hover:bg-surface2/70 hover:text-fg">
+            <Link key={l.href} href={l.href} className="rounded-lg px-3 py-2 text-sm font-medium text-muted transition-colors hover:text-fg">
               {l.label}
             </Link>
           ))}
@@ -62,7 +62,7 @@ export function Navbar() {
             )}
           </div>
           <button
-            className="rounded-full border border-line bg-surface p-2.5 md:hidden"
+            className="rounded-xl border border-line bg-surface p-2.5 md:hidden"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             onClick={() => setOpen((o) => !o)}
@@ -75,7 +75,7 @@ export function Navbar() {
         <div className="border-t border-line bg-bg px-4 py-3 md:hidden">
           <nav aria-label="Mobile" className="flex flex-col gap-1">
             {links.map((l) => (
-              <Link key={l.href} href={l.href} onClick={() => setOpen(false)} className="rounded-2xl px-3 py-2.5 text-sm font-medium hover:bg-surface2">
+              <Link key={l.href} href={l.href} onClick={() => setOpen(false)} className="rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-surface2">
                 {l.label}
               </Link>
             ))}

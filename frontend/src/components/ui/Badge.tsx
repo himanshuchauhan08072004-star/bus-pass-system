@@ -1,10 +1,10 @@
 import { cn, statusLabel, statusTone, type Tone } from "@/lib/format";
 
 const tones: Record<Tone, string> = {
-  neutral: "bg-surface2/70 text-muted border-line",
-  info: "bg-sage/50 text-brand border-brand/20",
+  neutral: "bg-surface2 text-muted border-line",
+  info: "bg-brand/10 text-brand border-brand/30",
   success: "bg-success/10 text-success border-success/30",
-  warning: "bg-peach/50 text-warning border-warning/30",
+  warning: "bg-warning/10 text-warning border-warning/40",
   danger: "bg-danger/10 text-danger border-danger/30",
 };
 

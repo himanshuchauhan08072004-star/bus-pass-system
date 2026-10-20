@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: { default: "TransitFlow — Cloud-based bus tickets and passes", template: "%s · TransitFlow" },
   description: "Discover routes, book tickets and manage digital bus passes with server-verified pricing and QR tickets.",
 };
-export const viewport: Viewport = { themeColor: "#292e20", width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { themeColor: "#060d1f", width: "device-width", initialScale: 1 };
 
 const themeInit = `try{var t=localStorage.getItem('tf-theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.classList.toggle('dark',d)}catch(e){}`;
 

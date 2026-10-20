@@ -85,25 +85,25 @@ export default function BookingDetailPage() {
 
       <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
         <Card className="overflow-hidden">
-          <div className="bg-gradient-to-br from-sage/60 via-surface to-peach/40 px-6 py-5">
+          <div className="bg-gradient-to-r from-brand/20 to-transparent px-5 py-4">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <p className="text-sm font-semibold">{b.route_code} · {b.route_name}</p>
               <StatusBadge status={b.status} />
             </div>
-            <p className="mt-3 flex flex-wrap items-center gap-2 font-display text-3xl font-semibold tracking-tight">
+            <p className="mt-3 flex flex-wrap items-center gap-2 text-2xl font-bold tracking-tight">
               {b.from_stop_name} <ArrowRight className="h-5 w-5 text-brand" aria-hidden /> {b.to_stop_name}
             </p>
           </div>
-          <dl className="grid gap-5 p-6 sm:grid-cols-2">
+          <dl className="grid gap-5 p-5 sm:grid-cols-2">
             <div><dt className="text-xs text-muted">Date</dt><dd className="font-semibold">{formatDate(b.travel_date)}</dd></div>
             <div><dt className="text-xs text-muted">Departure</dt><dd className="font-semibold">{formatTime(b.departure_time)}</dd></div>
             <div><dt className="text-xs text-muted">Passengers</dt><dd className="flex items-center gap-1.5 font-semibold"><Users className="h-4 w-4" aria-hidden />{b.passengers}</dd></div>
             <div><dt className="text-xs text-muted">Booking reference</dt><dd className="font-mono font-semibold">{b.reference}</dd></div>
             <div><dt className="text-xs text-muted">Fare per person</dt><dd className="font-semibold">{formatMoney(b.unit_fare)}</dd></div>
-            <div><dt className="text-xs text-muted">Total fare</dt><dd className="font-display text-xl font-semibold">{formatMoney(b.total_fare)}</dd></div>
+            <div><dt className="text-xs text-muted">Total fare</dt><dd className="text-lg font-bold">{formatMoney(b.total_fare)}</dd></div>
           </dl>
           {b.payment && (
-            <div className="border-t border-line/60 px-6 py-4 text-sm">
+            <div className="border-t border-line px-5 py-4 text-sm">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="text-muted">Payment <span className="font-mono">{b.payment.reference}</span></span>
                 <StatusBadge status={b.payment.status} />

@@ -48,9 +48,9 @@ export function PaymentModal({
     <Modal open={open && !!payment} onClose={busy ? () => undefined : onClose} title="Complete payment">
       {payment && (
         <div className="space-y-4">
-          <div className="rounded-3xl bg-sage/40 p-5">
+          <div className="rounded-xl bg-surface2 p-4">
             <p className="text-sm text-muted">{title}</p>
-            <p className="mt-1 font-display text-4xl font-semibold tracking-tight">{formatMoney(payment.amount, payment.currency)}</p>
+            <p className="mt-1 text-3xl font-bold tracking-tight">{formatMoney(payment.amount, payment.currency)}</p>
             <p className="mt-1 font-mono text-xs text-muted">Ref {payment.reference}</p>
           </div>
           <Alert tone="info">

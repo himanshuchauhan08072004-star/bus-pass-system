@@ -7,14 +7,14 @@ type Variant = "primary" | "secondary" | "ghost" | "danger";
 type Size = "sm" | "md" | "lg";
 
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed active:scale-[0.98] select-none";
+  "inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-all disabled:opacity-60 disabled:cursor-not-allowed active:scale-[0.98] select-none";
 const variants: Record<Variant, string> = {
-  primary: "bg-brand text-brand-fg shadow-glow hover:-translate-y-px hover:opacity-90",
-  secondary: "bg-surface/80 text-fg border border-line hover:bg-surface2",
+  primary: "bg-brand text-brand-fg shadow-glow hover:brightness-110",
+  secondary: "bg-surface text-fg border border-line hover:bg-surface2",
   ghost: "text-fg hover:bg-surface2",
-  danger: "bg-danger text-white hover:opacity-90",
+  danger: "bg-danger text-white hover:brightness-110",
 };
-const sizes: Record<Size, string> = { sm: "h-9 px-4 text-sm", md: "h-11 px-6 text-sm", lg: "h-12 px-7 text-base" };
+const sizes: Record<Size, string> = { sm: "h-9 px-3 text-sm", md: "h-11 px-5 text-sm", lg: "h-12 px-6 text-base" };
 
 export function buttonClasses(variant: Variant = "primary", size: Size = "md", extra?: string) {
   return cn(base, variants[variant], sizes[size], extra);
