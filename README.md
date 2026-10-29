@@ -2,6 +2,8 @@
 
 A cloud-ready digital bus ticketing and pass platform. Passengers discover routes, book tickets with a QR code, apply for and renew bus passes, and pay through a payment abstraction. Administrators manage the network, fares, passes, bookings and users. Built for the **CodeAlpha Cloud Computing Internship, Task 3: Cloud-Based Bus Pass System**.
 
+# LIVE LINK : https://bus-pass-system-rust.vercel.app/
+
 > **Demo project.** Routes, fares and payments are demonstration data (`DEMO-` route codes). Payments use a simulated provider: no money moves and no card data is collected.
 
 ## Highlights
@@ -123,3 +125,5 @@ Honest summary; details in `docs/security.md` and `docs/scaling.md`.
 - No email verification or password reset flow.
 - The rate limiter is in-memory per instance.
 - The application has been run and tested locally (SQLite and PostgreSQL). It has **not** been deployed to AWS from this repository, and autoscaling has **not** been configured or load-tested; the AWS guide describes how to do both.
+
+## Himanshu Chauhan
